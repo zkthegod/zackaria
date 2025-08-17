@@ -125,6 +125,12 @@ img {
     color: white;
 }
 
+/* Added */
+.snapchat {
+    background-color: #FFFC00;
+    color: #000;
+}
+
 .section {
     padding: 6rem 0;
 }
@@ -283,14 +289,18 @@ nav ul li a:hover::after {
     flex: 1;
 }
 
+/* Improved to support many items */
 .stats {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
     margin: 2rem 0;
 }
 
 .stat {
     text-align: center;
+    flex: 1 1 180px;
 }
 
 .number {
@@ -420,6 +430,14 @@ nav ul li a:hover::after {
 /* Servers Section */
 .servers-section {
     background-color: white;
+}
+
+/* Added */
+.section-subtitle {
+    text-align: center;
+    color: var(--gray-color);
+    margin-top: -1rem;
+    margin-bottom: 2rem;
 }
 
 .servers-grid {

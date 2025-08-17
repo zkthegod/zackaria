@@ -28,8 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function animateStats() {
         stats.forEach(stat => {
             const target = parseInt(stat.getAttribute('data-count'));
+            const suffix = stat.getAttribute('data-suffix') || '';
             const duration = 2000; // 2 seconds
-            const step = target / (duration / 16); // 60fps
+            const step = target / (duration / 16); // ~60fps
             
             let current = 0;
             const timer = setInterval(() => {
@@ -37,8 +38,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (current >= target) {
                     clearInterval(timer);
                     current = target;
+                    stat.textContent = Math.floor(current).toLocaleString() + suffix;
+                } else {
+                    stat.textContent = Math.floor(current).toLocaleString();
                 }
-                stat.textContent = Math.floor(current).toLocaleString();
             }, 16);
         });
     }
