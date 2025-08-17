@@ -1321,22 +1321,23 @@ main, footer { position: relative; z-index: 1; }
 .card-sheen::after {
     content: '';
     position: absolute;
-    top: -150%;
-    left: -150%;
-    width: 300%;
-    height: 300%;
-    background: linear-gradient(120deg, transparent 45%, rgba(255,255,255,0.12) 50%, transparent 55%);
-    transform: translateX(-100%);
-    transition: transform 0.6s ease;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(135deg, transparent 45%, rgba(255,255,255,0.12) 50%, transparent 55%);
+    transform: translate(60%, -60%) rotate(15deg);
+    transition: transform 0.8s ease;
     pointer-events: none;
+    will-change: transform;
 }
 
 body.theme-dark .card-sheen::after {
-    background: linear-gradient(120deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%);
+    background: linear-gradient(135deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%);
 }
 
 .card-sheen:hover::after {
-    transform: translateX(0%);
+    transform: translate(-60%, 60%) rotate(15deg);
 }
 
 /* Apply sheen to all cards */
@@ -1391,19 +1392,6 @@ header.scrolled .logo { display: none; }
     background-size: 200% 100%;
 }
 
-/* Diagonal animated tint from top-right to bottom-right */
-.card-sheen::after {
-    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.14) 50%, transparent 60%);
-    transform: translate(100%, -100%) rotate(0.001deg);
-}
-
-.card-sheen:hover::after {
-    transform: translate(-50%, 50%) rotate(0.001deg);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .card-sheen::after { transition: none; }
-}
 
 /* Place sheen behind content so buttons/text are unaffected */
 .card-sheen::after { z-index: 0; }
