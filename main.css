@@ -892,15 +892,19 @@ nav ul li a.active::after {
 /* Unify card visuals */
 .video-card,
 .server-card,
-.partner-card {
+.partner-card,
+.stat-card {
 	background-color: var(--card-bg);
 	border: 1px solid var(--card-border);
 	box-shadow: var(--shadow-sm);
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .video-card:hover,
 .server-card:hover,
-.partner-card:hover {
+.partner-card:hover,
+.stat-card:hover {
+	transform: translateY(-8px);
 	box-shadow: var(--shadow-md);
 }
 
@@ -1042,7 +1046,7 @@ nav ul {
 }
 
 .theme-toggle {
-    margin-left: 1.5rem;
+    margin-left: 2rem;
 }
 
 /* Statistics one-row layout and equal cards */
@@ -1155,4 +1159,93 @@ nav ul {
 /* Server card spacing */
 .server-card p {
     margin: 0.75rem 0 1rem;
+}
+
+/* Servers grid: keep 4 on desktop */
+@media (min-width: 992px) {
+	.servers-grid {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+/* Profile image ring */
+.profile-photo {
+	border: 4px solid rgba(168, 85, 247, 0.35);
+}
+
+body.theme-dark .profile-photo {
+	border-color: rgba(168, 85, 247, 0.55);
+}
+
+/* About columns centering */
+.about-text,
+.about-skills {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+/* Dark theme for contact */
+body.theme-dark .contact-section {
+	background-color: #0f172a;
+}
+
+body.theme-dark .contact-section .contact-info p,
+body.theme-dark .contact-section h3,
+body.theme-dark .contact-section .contact-social a {
+	color: #e5e7eb;
+}
+
+body.theme-dark .contact-section .contact-social a:hover {
+	background-color: var(--primary-color);
+	color: #fff;
+}
+
+body.theme-dark .contact-section .form-group input,
+body.theme-dark .contact-section .form-group textarea {
+	background-color: #0b1220;
+	border-color: #334155;
+	color: #e5e7eb;
+}
+
+/* Footer dark override */
+body.theme-dark footer {
+	background-color: #0b1220;
+}
+
+body.theme-dark .footer-bottom {
+	border-top-color: #1f2a44;
+}
+
+/* Remove newsletter spacing side-effects */
+.footer-content {
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Toast notification */
+.toast {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	background: var(--card-bg);
+	color: var(--dark-color);
+	border: 1px solid var(--card-border);
+	box-shadow: var(--shadow-md);
+	border-radius: var(--radius-md);
+	padding: 0.75rem 1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	z-index: 3000;
+	opacity: 0;
+	transform: translateY(-8px);
+	animation: toast-in 0.25s ease forwards;
+}
+
+.toast .icon {
+	color: var(--success-color);
+}
+
+@keyframes toast-in {
+	to { opacity: 1; transform: translateY(0); }
 }

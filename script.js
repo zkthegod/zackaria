@@ -58,21 +58,19 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	}
 	
-	// Animate stats counting
-	const stats = document.querySelectorAll('.stat .number, .stat-card .number');
-	
-	function animateStats() {
-		stats.forEach(stat => {
+	// Animate stats counting for any numbers within a container
+	function animateNumbersIn(container) {
+		container.querySelectorAll('.number').forEach(stat => {
 			const target = parseInt(stat.getAttribute('data-count'));
 			const suffix = stat.getAttribute('data-suffix') || '';
-			const duration = 2000; // 2 seconds
-			const step = target / (duration / 16); // ~60fps
-			
+			const duration = 2000;
+			const step = target / (duration / 16);
 			let current = 0;
-			const timer = setInterval(() => {
+			clearInterval(stat.__timer);
+			stat.__timer = setInterval(() => {
 				current += step;
 				if (current >= target) {
-					clearInterval(timer);
+					clearInterval(stat.__timer);
 					current = target;
 					stat.textContent = Math.floor(current).toLocaleString() + suffix;
 				} else {
@@ -80,6 +78,19 @@ document.addEventListener('DOMContentLoaded', function() {
 				}
 			}, 16);
 		});
+	}
+
+	// Observe statistic cards for repeated animations
+	const statCards = document.querySelectorAll('.stat-card');
+	if (statCards.length) {
+		const statObserver = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					animateNumbersIn(entry.target);
+				}
+			});
+		}, { threshold: 0.5 });
+		statCards.forEach(card => statObserver.observe(card));
 	}
 	
 	// Animate skill bars
@@ -100,8 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	const observer = new IntersectionObserver((entries, observer) => {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
-				if (entry.target.id === 'about' || entry.target.id === 'statistics') {
-					animateStats();
+				if (entry.target.id === 'about') {
 					animateSkills();
 				}
 				observer.unobserve(entry.target);
@@ -127,7 +137,22 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	});
 	
-	// Form submission with in-page confirmation
+	// Toast utility
+	function showToast(message) {
+		const root = document.getElementById('toast-root');
+		if (!root) return;
+		const toast = document.createElement('div');
+		toast.className = 'toast';
+		toast.innerHTML = `<span class="icon">✔</span><span>${message}</span>`;
+		root.appendChild(toast);
+		setTimeout(() => {
+			toast.style.opacity = '0';
+			toast.style.transform = 'translateY(-8px)';
+			setTimeout(() => toast.remove(), 200);
+		}, 1600);
+	}
+
+	// Update contact submission to show toast
 	const contactForm = document.getElementById('contactForm');
 	if (contactForm) {
 		contactForm.addEventListener('submit', function(e) {
@@ -135,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			const submitBtn = this.querySelector('.submit-btn');
 			submitBtn.disabled = true;
 			submitBtn.textContent = 'Sent ✓';
+			showToast('Your message was sent');
 			setTimeout(() => {
 				this.reset();
 				submitBtn.disabled = false;
