@@ -198,10 +198,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-	// Hero-only particles - enhanced subtle effect
+	// Hero-only particles - enhanced with mouse interaction
 	const heroCanvas = document.getElementById('heroParticles');
 	if (heroCanvas) {
 		const container = document.querySelector('.hero .container');
+		let mouseX = 0, mouseY = 0;
+		let isMouseInHero = false;
+		
 		function sizeHeroCanvas() {
 			const rect = container.getBoundingClientRect();
 			heroCanvas.width = rect.width;
@@ -210,8 +213,20 @@ document.addEventListener('DOMContentLoaded', function() {
 		window.addEventListener('resize', sizeHeroCanvas);
 		sizeHeroCanvas();
 		
+		// Mouse tracking for interactive particles
+		container.addEventListener('mousemove', (e) => {
+			const rect = container.getBoundingClientRect();
+			mouseX = e.clientX - rect.left;
+			mouseY = e.clientY - rect.top;
+			isMouseInHero = true;
+		});
+		
+		container.addEventListener('mouseleave', () => {
+			isMouseInHero = false;
+		});
+		
 		const ctx = heroCanvas.getContext('2d');
-		const particles = Array.from({ length: 32 }, () => ({
+		const particles = Array.from({ length: 40 }, () => ({
 			x: Math.random() * heroCanvas.width,
 			y: Math.random() * heroCanvas.height,
 			r: Math.random() * 1.2 + 0.3,
@@ -220,13 +235,47 @@ document.addEventListener('DOMContentLoaded', function() {
 			dy: (Math.random() - 0.5) * 0.15,
 			hue: Math.random() * 60 + 250, // Purple to blue range
 			saturation: Math.random() * 30 + 70,
-			lightness: Math.random() * 20 + 60
+			lightness: Math.random() * 20 + 60,
+			originalR: 0,
+			originalOpacity: 0
 		}));
+		
+		// Initialize original values
+		particles.forEach(p => {
+			p.originalR = p.r;
+			p.originalOpacity = p.opacity;
+		});
 		
 		function step() {
 			ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
 			
 			particles.forEach(p => {
+				// Mouse interaction - particles react to mouse position
+				if (isMouseInHero) {
+					const dx = mouseX - p.x;
+					const dy = mouseY - p.y;
+					const distance = Math.sqrt(dx * dx + dy * dy);
+					
+					if (distance < 100) {
+						// Particles near mouse get bigger and brighter
+						const influence = Math.max(0, 1 - distance / 100);
+						p.r = p.originalR + influence * 2;
+						p.opacity = p.originalOpacity + influence * 0.3;
+						
+						// Gentle attraction to mouse
+						p.dx += dx * 0.0001;
+						p.dy += dy * 0.0001;
+					} else {
+						// Return to normal
+						p.r = p.originalR;
+						p.opacity = p.originalOpacity;
+					}
+				} else {
+					// Return to normal when mouse leaves
+					p.r = p.originalR;
+					p.opacity = p.originalOpacity;
+				}
+				
 				// Update position
 				p.x += p.dx;
 				p.y += p.dy;
@@ -238,6 +287,10 @@ document.addEventListener('DOMContentLoaded', function() {
 				// Keep particles in bounds
 				p.x = Math.max(0, Math.min(heroCanvas.width, p.x));
 				p.y = Math.max(0, Math.min(heroCanvas.height, p.y));
+				
+				// Dampen velocity for smooth movement
+				p.dx *= 0.999;
+				p.dy *= 0.999;
 				
 				// Draw particle with subtle glow
 				ctx.globalAlpha = p.opacity;

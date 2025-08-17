@@ -233,8 +233,20 @@ nav ul li a:hover::after {
 
 /* Hero Section */
 .hero {
-    padding: 11.875rem 0 5rem;
+    padding: 14rem 0 5rem;
     background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+    position: relative;
+    overflow: hidden;
+    animation: gradientShift 8s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { 
+        background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+    }
+    50% { 
+        background: linear-gradient(135deg, #e9d5ff 0%, #f3e8ff 100%);
+    }
 }
 
 .hero .container {
@@ -252,18 +264,37 @@ nav ul li a:hover::after {
     font-size: 3.5rem;
     margin-bottom: 1.5rem;
     color: var(--dark-color);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.hero h1:hover {
+    transform: scale(1.02);
+    text-shadow: 0 4px 8px rgba(126, 34, 206, 0.2);
 }
 
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 2rem;
     color: var(--gray-color);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.hero p:hover {
+    color: var(--dark-color);
+    transform: translateX(5px);
 }
 
 .social-links {
     display: flex;
     gap: 1rem;
     margin-top: 2rem;
+    transition: all 0.3s ease;
+}
+
+.social-links:hover {
+    transform: translateY(-2px);
 }
 
 .hero-image {
@@ -275,6 +306,39 @@ nav ul li a:hover::after {
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(126, 34, 206, 0.2);
     max-width: 400px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.hero-image img:hover {
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 25px 50px rgba(126, 34, 206, 0.3);
+    filter: brightness(1.1);
+}
+
+/* Floating animation for hero elements */
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+.hero-content h1 {
+    animation: float 3s ease-in-out infinite;
+}
+
+.hero-content p {
+    animation: float-slow 4s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+.social-links {
+    animation: float-slow 3.5s ease-in-out infinite;
+    animation-delay: 1s;
 }
 
 /* About Section */
