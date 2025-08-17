@@ -813,3 +813,112 @@ footer {
         width: 100%;
     }
 }
+
+/* Design system extensions */
+:root {
+	--radius-sm: 8px;
+	--radius-md: 12px;
+	--radius-lg: 16px;
+	--shadow-sm: 0 4px 12px rgba(0,0,0,0.06);
+	--shadow-md: 0 10px 24px rgba(0,0,0,0.10);
+	--shadow-lg: 0 22px 48px rgba(0,0,0,0.14);
+	--card-bg: #ffffff;
+	--card-border: #e2e8f0;
+}
+
+/* Dark theme */
+body.theme-dark {
+	--light-color: #0b1220;
+	--dark-color: #e5e7eb;
+	--secondary-color: #0f172a;
+	--gray-color: #9aa4b2;
+	--card-bg: #0f172a;
+	--card-border: #1e293b;
+}
+
+/* Global section spacing and anchor offset */
+section {
+	padding: 6rem 0;
+	scroll-margin-top: 96px;
+}
+
+/* Modern header: translucent with blur */
+header {
+	background-color: rgba(255,255,255,0.7);
+	backdrop-filter: saturate(180%) blur(12px);
+}
+
+body.theme-dark header {
+	background-color: rgba(2, 6, 23, 0.55);
+}
+
+/* Active nav link */
+nav ul li a.active {
+	color: var(--primary-color);
+}
+
+nav ul li a.active::after {
+	width: 100%;
+}
+
+/* Theme toggle */
+.theme-toggle {
+	background: transparent;
+	border: 1px solid var(--card-border);
+	color: var(--dark-color);
+	border-radius: 999px;
+	width: 40px;
+	height: 40px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 1rem;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+	transform: translateY(-2px);
+	box-shadow: var(--shadow-sm);
+}
+
+/* Unify card visuals */
+.video-card,
+.server-card,
+.partner-card {
+	background-color: var(--card-bg);
+	border: 1px solid var(--card-border);
+	box-shadow: var(--shadow-sm);
+}
+
+.video-card:hover,
+.server-card:hover,
+.partner-card:hover {
+	box-shadow: var(--shadow-md);
+}
+
+/* Hero image radius via token */
+.hero-image img {
+	border-radius: var(--radius-lg);
+}
+
+/* Dark hero gradient */
+body.theme-dark .hero {
+	background: linear-gradient(135deg, #2a1744 0%, #1d1033 100%);
+}
+
+/* Better focus visibility */
+:focus-visible {
+	outline: 3px solid var(--primary-light);
+	outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+		scroll-behavior: auto !important;
+	}
+}
