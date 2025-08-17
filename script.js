@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
+	// Initial site loader
+	const loader = document.getElementById('siteLoader');
+	if (loader) {
+		loader.classList.add('active');
+		setTimeout(() => {
+			loader.classList.remove('active');
+		}, 250);
+	}
+
 	// Mobile menu toggle
 	const hamburger = document.querySelector('.hamburger');
 	const navMenu = document.querySelector('nav ul');
@@ -118,13 +127,19 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	});
 	
-	// Form submission
+	// Form submission with in-page confirmation
 	const contactForm = document.getElementById('contactForm');
 	if (contactForm) {
 		contactForm.addEventListener('submit', function(e) {
 			e.preventDefault();
-			alert('Thank you for your message! I will get back to you soon.');
-			this.reset();
+			const submitBtn = this.querySelector('.submit-btn');
+			submitBtn.disabled = true;
+			submitBtn.textContent = 'Sent ✓';
+			setTimeout(() => {
+				this.reset();
+				submitBtn.disabled = false;
+				submitBtn.textContent = 'Send Message';
+			}, 1200);
 		});
 	}
 	

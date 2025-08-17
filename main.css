@@ -1093,3 +1093,66 @@ nav ul {
     height: 100%;
     object-fit: cover;
 }
+
+/* Loader overlay */
+#siteLoader {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(15, 23, 42, 0.9);
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+#siteLoader.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.loader-spinner {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 6px solid rgba(168, 85, 247, 0.25);
+    border-top-color: var(--primary-color);
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Profile image */
+.profile-photo {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 20px 60px rgba(126, 34, 206, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-photo:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 28px 70px rgba(126, 34, 206, 0.35);
+}
+
+@media (max-width: 992px) {
+    .profile-photo {
+        width: 260px;
+        height: 260px;
+    }
+}
+
+/* Hero spacing for large image */
+.hero {
+    padding: 8rem 0 4rem;
+}
+
+/* Server card spacing */
+.server-card p {
+    margin: 0.75rem 0 1rem;
+}
