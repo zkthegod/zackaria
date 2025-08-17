@@ -1013,3 +1013,83 @@ body.theme-dark .statistics-section {
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     }
 }
+
+/* Body and sections backgrounds in dark mode */
+body.theme-dark {
+    background-color: #0b1220;
+}
+
+body.theme-dark section,
+body.theme-dark .youtube-section,
+body.theme-dark .servers-section,
+body.theme-dark .partners-section,
+body.theme-dark .contact-section,
+body.theme-dark .about {
+    background-color: #0f172a;
+}
+
+/* Header sizing and layout */
+header .container {
+    padding: 0.75rem 20px;
+}
+
+.logo {
+    font-size: 1.4rem;
+}
+
+nav ul {
+    gap: 1.25rem;
+}
+
+.theme-toggle {
+    margin-left: 1.5rem;
+}
+
+/* Statistics one-row layout and equal cards */
+.stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.stat-card {
+    min-height: 150px;
+}
+
+.stat-value {
+    word-break: break-word;
+}
+
+@media (max-width: 992px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* About layout tweaks */
+.about-content {
+    align-items: flex-start;
+}
+
+.about-text p + p {
+    margin-top: 0.5rem;
+}
+
+/* Server logo support */
+.server-card .server-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 0 auto 0.75rem;
+}
+
+.server-card .server-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
