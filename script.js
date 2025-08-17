@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 	
 	// Animate stats counting
-	const stats = document.querySelectorAll('.stat .number');
+	const stats = document.querySelectorAll('.stat .number, .stat-card .number');
 	
 	function animateStats() {
 		stats.forEach(stat => {
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	const observer = new IntersectionObserver((entries, observer) => {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
-				if (entry.target.id === 'about') {
+				if (entry.target.id === 'about' || entry.target.id === 'statistics') {
 					animateStats();
 					animateSkills();
 				}
