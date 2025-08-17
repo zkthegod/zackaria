@@ -147,9 +147,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		root.appendChild(toast);
 		setTimeout(() => {
 			toast.style.opacity = '0';
-			toast.style.transform = 'translateY(-8px)';
-			setTimeout(() => toast.remove(), 200);
-		}, 1600);
+			toast.style.transform = 'translate(-50%, -48%)';
+			setTimeout(() => toast.remove(), 250);
+		}, 2200);
 	}
 
 	// Update contact submission to show toast
@@ -194,5 +194,41 @@ document.addEventListener('DOMContentLoaded', function() {
 			});
 		}, { threshold: 0.6 });
 		spySections.forEach(s => spy.observe(s));
+	}
+
+	// Particles background (very light)
+	const canvas = document.getElementById('bgParticles');
+	if (canvas) {
+		const ctx = canvas.getContext('2d');
+		function resize() {
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		}
+		window.addEventListener('resize', resize);
+		resize();
+		const particles = Array.from({ length: 40 }, () => ({
+			x: Math.random() * canvas.width,
+			y: Math.random() * canvas.height,
+			r: Math.random() * 1.6 + 0.4,
+			opacity: Math.random() * 0.35 + 0.15,
+			dx: (Math.random() - 0.5) * 0.2,
+			dy: (Math.random() - 0.5) * 0.2,
+		}));
+		function step() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			ctx.fillStyle = '#a855f7';
+			particles.forEach(p => {
+				p.x += p.dx; p.y += p.dy;
+				if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+				if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+				ctx.globalAlpha = p.opacity;
+				ctx.beginPath();
+				ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+				ctx.fill();
+			});
+			ctx.globalAlpha = 1;
+			requestAnimationFrame(step);
+		}
+		requestAnimationFrame(step);
 	}
 });

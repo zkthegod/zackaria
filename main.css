@@ -1225,8 +1225,11 @@ body.theme-dark .footer-bottom {
 /* Toast notification */
 .toast {
 	position: fixed;
-	top: 20px;
-	right: 20px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -40%);
+	min-width: 280px;
+	font-size: 1rem;
 	background: var(--card-bg);
 	color: var(--dark-color);
 	border: 1px solid var(--card-border);
@@ -1242,10 +1245,61 @@ body.theme-dark .footer-bottom {
 	animation: toast-in 0.25s ease forwards;
 }
 
-.toast .icon {
-	color: var(--success-color);
-}
+.toast .icon { color: #22c55e; }
 
 @keyframes toast-in {
 	to { opacity: 1; transform: translateY(0); }
 }
+
+/* Centered toast */
+.toast {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -40%);
+	min-width: 280px;
+	font-size: 1rem;
+}
+
+.toast .icon { color: #22c55e; }
+
+/* Card hover outline */
+.server-card:hover,
+.partner-card:hover,
+.stat-card:hover {
+	box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.35), var(--shadow-md);
+}
+
+/* Level buttons inside cards */
+.partner-card .partner-btn,
+.server-card .join-btn,
+.stat-card .btn {
+	margin-top: auto;
+}
+
+.partner-card,
+.server-card,
+.stat-card {
+	display: flex;
+	flex-direction: column;
+}
+
+/* Hide logo text in sticky state */
+header.scrolled .logo { display: none; }
+
+/* Ensure circular profile image */
+.profile-photo {
+	border-radius: 50% !important;
+}
+
+/* Particles canvas */
+#bgParticles {
+	position: fixed;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	opacity: 0.15;
+}
+
+/* Lift site content above particles */
+header, main, footer { position: relative; z-index: 1; }
