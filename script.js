@@ -196,31 +196,37 @@ document.addEventListener('DOMContentLoaded', function() {
 		spySections.forEach(s => spy.observe(s));
 	}
 
-	// Particles background (very light)
-	const canvas = document.getElementById('bgParticles');
-	if (canvas) {
-		const ctx = canvas.getContext('2d');
-		function resize() {
-			canvas.width = window.innerWidth;
-			canvas.height = window.innerHeight;
+	// Add sheen class to cards dynamically
+	document.querySelectorAll('.partner-card, .server-card, .stat-card').forEach(el => el.classList.add('card-sheen'));
+
+	// Hero-only particles
+	const heroCanvas = document.getElementById('heroParticles');
+	if (heroCanvas) {
+		const container = document.querySelector('.hero .container');
+		function sizeHeroCanvas() {
+			const rect = container.getBoundingClientRect();
+			heroCanvas.width = rect.width;
+			heroCanvas.height = rect.height;
 		}
-		window.addEventListener('resize', resize);
-		resize();
-		const particles = Array.from({ length: 40 }, () => ({
-			x: Math.random() * canvas.width,
-			y: Math.random() * canvas.height,
-			r: Math.random() * 1.6 + 0.4,
-			opacity: Math.random() * 0.35 + 0.15,
+		window.addEventListener('resize', sizeHeroCanvas);
+		// Position canvas absolutely inside hero-content which is relative
+		sizeHeroCanvas();
+		const ctx = heroCanvas.getContext('2d');
+		const particles = Array.from({ length: 24 }, () => ({
+			x: Math.random() * heroCanvas.width,
+			y: Math.random() * heroCanvas.height,
+			r: Math.random() * 1.4 + 0.4,
+			opacity: Math.random() * 0.3 + 0.1,
 			dx: (Math.random() - 0.5) * 0.2,
 			dy: (Math.random() - 0.5) * 0.2,
 		}));
 		function step() {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
 			ctx.fillStyle = '#a855f7';
 			particles.forEach(p => {
 				p.x += p.dx; p.y += p.dy;
-				if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-				if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+				if (p.x < 0 || p.x > heroCanvas.width) p.dx *= -1;
+				if (p.y < 0 || p.y > heroCanvas.height) p.dy *= -1;
 				ctx.globalAlpha = p.opacity;
 				ctx.beginPath();
 				ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);

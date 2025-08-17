@@ -1303,3 +1303,82 @@ header.scrolled .logo { display: none; }
 
 /* Lift site content above particles */
 header, main, footer { position: relative; z-index: 1; }
+
+/* Bigger centered toast */
+.toast {
+    min-width: 360px;
+    padding: 1rem 1.25rem;
+    font-size: 1.1rem;
+    transform: translate(-50%, -45%);
+}
+
+/* Diagonal sheen on cards */
+.card-sheen {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-sheen::after {
+    content: '';
+    position: absolute;
+    top: -150%;
+    left: -150%;
+    width: 300%;
+    height: 300%;
+    background: linear-gradient(120deg, transparent 45%, rgba(255,255,255,0.12) 50%, transparent 55%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+    pointer-events: none;
+}
+
+body.theme-dark .card-sheen::after {
+    background: linear-gradient(120deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%);
+}
+
+.card-sheen:hover::after {
+    transform: translateX(0%);
+}
+
+/* Apply sheen to all cards */
+.partner-card, .server-card, .stat-card { position: relative; }
+.partner-card.card-sheen, .server-card.card-sheen, .stat-card.card-sheen {}
+
+/* Hero title animated slight tint */
+.hero-title.with-sheen {
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(90deg, var(--dark-color), var(--primary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: heroTint 6s linear infinite;
+}
+
+body.theme-dark .hero-title.with-sheen {
+    background: linear-gradient(90deg, #e5e7eb, #a855f7);
+}
+
+@keyframes heroTint {
+    0% { filter: hue-rotate(0deg); }
+    50% { filter: hue-rotate(25deg); }
+    100% { filter: hue-rotate(0deg); }
+}
+
+/* Hero particles canvas */
+#heroParticles {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.12;
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+/* Sticky header already fixed; ensure logo hides when scrolled */
+header { position: fixed; }
+header.scrolled .logo { display: none; }
+
+/* Add card-sheen class to cards structurally via CSS selector */
+.partner-card, .server-card, .stat-card { overflow: hidden; }
