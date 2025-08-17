@@ -196,10 +196,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		spySections.forEach(s => spy.observe(s));
 	}
 
-	// Add sheen class to cards dynamically
-	document.querySelectorAll('.partner-card, .server-card, .stat-card').forEach(el => el.classList.add('card-sheen'));
 
-	// Hero-only particles
+
+	// Hero-only particles - enhanced subtle effect
 	const heroCanvas = document.getElementById('heroParticles');
 	if (heroCanvas) {
 		const container = document.querySelector('.hero .container');
@@ -209,32 +208,57 @@ document.addEventListener('DOMContentLoaded', function() {
 			heroCanvas.height = rect.height;
 		}
 		window.addEventListener('resize', sizeHeroCanvas);
-		// Position canvas absolutely inside hero-content which is relative
 		sizeHeroCanvas();
+		
 		const ctx = heroCanvas.getContext('2d');
-		const particles = Array.from({ length: 24 }, () => ({
+		const particles = Array.from({ length: 32 }, () => ({
 			x: Math.random() * heroCanvas.width,
 			y: Math.random() * heroCanvas.height,
-			r: Math.random() * 1.4 + 0.4,
-			opacity: Math.random() * 0.3 + 0.1,
-			dx: (Math.random() - 0.5) * 0.2,
-			dy: (Math.random() - 0.5) * 0.2,
+			r: Math.random() * 1.2 + 0.3,
+			opacity: Math.random() * 0.15 + 0.05,
+			dx: (Math.random() - 0.5) * 0.15,
+			dy: (Math.random() - 0.5) * 0.15,
+			hue: Math.random() * 60 + 250, // Purple to blue range
+			saturation: Math.random() * 30 + 70,
+			lightness: Math.random() * 20 + 60
 		}));
+		
 		function step() {
 			ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
-			ctx.fillStyle = '#a855f7';
+			
 			particles.forEach(p => {
-				p.x += p.dx; p.y += p.dy;
+				// Update position
+				p.x += p.dx;
+				p.y += p.dy;
+				
+				// Bounce off edges
 				if (p.x < 0 || p.x > heroCanvas.width) p.dx *= -1;
 				if (p.y < 0 || p.y > heroCanvas.height) p.dy *= -1;
+				
+				// Keep particles in bounds
+				p.x = Math.max(0, Math.min(heroCanvas.width, p.x));
+				p.y = Math.max(0, Math.min(heroCanvas.height, p.y));
+				
+				// Draw particle with subtle glow
 				ctx.globalAlpha = p.opacity;
+				ctx.fillStyle = `hsl(${p.hue}, ${p.saturation}%, ${p.lightness}%)`;
+				
+				// Add subtle glow effect
+				ctx.shadowColor = `hsl(${p.hue}, ${p.saturation}%, ${p.lightness}%)`;
+				ctx.shadowBlur = 8;
+				
 				ctx.beginPath();
 				ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
 				ctx.fill();
+				
+				// Reset shadow
+				ctx.shadowBlur = 0;
 			});
+			
 			ctx.globalAlpha = 1;
 			requestAnimationFrame(step);
 		}
+		
 		requestAnimationFrame(step);
 	}
 });

@@ -233,7 +233,7 @@ nav ul li a:hover::after {
 
 /* Hero Section */
 .hero {
-    padding: 10rem 0 5rem;
+    padding: 11.875rem 0 5rem;
     background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
 }
 
@@ -1267,7 +1267,7 @@ body.theme-dark .footer-bottom {
 .server-card:hover,
 .partner-card:hover,
 .stat-card:hover {
-	box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.35), var(--shadow-md);
+	box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.8), var(--shadow-md);
 }
 
 /* Level buttons inside cards */
@@ -1312,39 +1312,7 @@ main, footer { position: relative; z-index: 1; }
     transform: translate(-50%, -45%);
 }
 
-/* Diagonal sheen on cards */
-.card-sheen {
-    position: relative;
-    overflow: hidden;
-}
-
-.card-sheen::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(135deg, transparent 45%, rgba(255,255,255,0.12) 50%, transparent 55%);
-    transform: translate(60%, -60%) rotate(15deg);
-    transition: transform 0.8s ease;
-    pointer-events: none;
-    will-change: transform;
-}
-
-body.theme-dark .card-sheen::after {
-    background: linear-gradient(135deg, transparent 45%, rgba(255,255,255,0.08) 50%, transparent 55%);
-}
-
-.card-sheen:hover::after {
-    transform: translate(-60%, 60%) rotate(15deg);
-}
-
-/* Apply sheen to all cards */
-.partner-card, .server-card, .stat-card { position: relative; }
-.partner-card.card-sheen, .server-card.card-sheen, .stat-card.card-sheen {}
-
-/* Hero title: gradient text only with animated background position */
+/* Hero title: simple gradient text */
 .hero-title.with-sheen {
     position: relative;
     display: inline-block;
@@ -1384,24 +1352,5 @@ body.theme-dark .hero-title.with-sheen {
 header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
 header.scrolled .logo { display: none; }
 
-/* Add card-sheen class to cards structurally via CSS selector */
-.partner-card, .server-card, .stat-card { overflow: hidden; }
-
-/* Ensure hero title only tints the text */
-.hero-title.with-sheen {
-    background-size: 200% 100%;
-}
 
 
-/* Place sheen behind content so buttons/text are unaffected */
-.card-sheen::after { z-index: 0; }
-.card-sheen > * { position: relative; z-index: 1; }
-
-/* Remove sheen from buttons explicitly */
-.partner-card .btn,
-.server-card .btn,
-.stat-card .btn {
-    position: relative;
-    z-index: 2;
-    background-clip: initial;
-}
