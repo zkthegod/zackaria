@@ -1343,25 +1343,28 @@ body.theme-dark .card-sheen::after {
 .partner-card, .server-card, .stat-card { position: relative; }
 .partner-card.card-sheen, .server-card.card-sheen, .stat-card.card-sheen {}
 
-/* Hero title animated slight tint */
+/* Hero title: gradient text only with animated background position */
 .hero-title.with-sheen {
     position: relative;
     display: inline-block;
-    background: linear-gradient(90deg, var(--dark-color), var(--primary-color));
+    background-image: linear-gradient(90deg, var(--dark-color), var(--primary-color));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: heroTint 6s linear infinite;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+    background-position: 0% 50%;
+    animation: heroGradient 6s linear infinite;
 }
 
 body.theme-dark .hero-title.with-sheen {
-    background: linear-gradient(90deg, #e5e7eb, #a855f7);
+    background-image: linear-gradient(90deg, #e5e7eb, #a855f7);
 }
 
-@keyframes heroTint {
-    0% { filter: hue-rotate(0deg); }
-    50% { filter: hue-rotate(25deg); }
-    100% { filter: hue-rotate(0deg); }
+@keyframes heroGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Hero particles canvas */
@@ -1400,4 +1403,17 @@ header.scrolled .logo { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
     .card-sheen::after { transition: none; }
+}
+
+/* Place sheen behind content so buttons/text are unaffected */
+.card-sheen::after { z-index: 0; }
+.card-sheen > * { position: relative; z-index: 1; }
+
+/* Remove sheen from buttons explicitly */
+.partner-card .btn,
+.server-card .btn,
+.stat-card .btn {
+    position: relative;
+    z-index: 2;
+    background-clip: initial;
 }
