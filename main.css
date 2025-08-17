@@ -1302,7 +1302,7 @@ header.scrolled .logo { display: none; }
 }
 
 /* Lift site content above particles */
-header, main, footer { position: relative; z-index: 1; }
+main, footer { position: relative; z-index: 1; }
 
 /* Bigger centered toast */
 .toast {
@@ -1377,8 +1377,27 @@ body.theme-dark .hero-title.with-sheen {
 .hero-content { position: relative; z-index: 1; }
 
 /* Sticky header already fixed; ensure logo hides when scrolled */
-header { position: fixed; }
+header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
 header.scrolled .logo { display: none; }
 
 /* Add card-sheen class to cards structurally via CSS selector */
 .partner-card, .server-card, .stat-card { overflow: hidden; }
+
+/* Ensure hero title only tints the text */
+.hero-title.with-sheen {
+    background-size: 200% 100%;
+}
+
+/* Diagonal animated tint from top-right to bottom-right */
+.card-sheen::after {
+    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.14) 50%, transparent 60%);
+    transform: translate(100%, -100%) rotate(0.001deg);
+}
+
+.card-sheen:hover::after {
+    transform: translate(-50%, 50%) rotate(0.001deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card-sheen::after { transition: none; }
+}
